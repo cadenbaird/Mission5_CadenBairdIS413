@@ -1,0 +1,58 @@
+﻿<div class="text-center">
+
+    @{
+        ViewData["Title"] = "Price Calculator";
+    }
+
+    <h1>@ViewData["Title"]</h1>
+    <div>
+        <label for="hours">Number of hours:</label>
+        <input type="number" id="hours" min="0">
+        <span class="error-message" style="color: red; display: none;">Please enter a positive number</span>
+    </div>
+
+    <div>
+        <label>Charge per hour:</label>
+        <input type="text" id="chargePerHour" value="50" readonly>
+    </div>
+
+    <div>
+        <button id="calculateButton">Calculate Total</button>
+    </div>
+
+    <div>
+        <label>Total:</label>
+        <span id="total"></span>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Index", "Home")">Back to Home</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#calculateButton').click(function () {
+                var hours = parseFloat($('#hours').val());
+                if (hours <= 0 || isNaN(hours)) {
+                    $('.error-message').show();
+                    $('#total').text('');
+                } else {
+                    $('.error-message').hide();
+                    var chargePerHour = parseFloat($('#chargePerHour').val());
+                    var total = hours * chargePerHour;
+                    $('#total').text('$' + total.toFixed(2));
+                }
+            });
+        });
+    </script>
+}
+<footer class="footer mt-auto py-3 bg-light" style="position: fixed; bottom: 0; width: 100%;">
+    <div class="container">
+        <span class="text-muted">&copy; 2024 Finding Your Tech - My Hobby. Built by Caden Baird, an avid technology enthusiast.</span>
+    </div>
+</footer>
+
